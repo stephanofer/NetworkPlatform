@@ -1,0 +1,13 @@
+.gradle/
+build/
+*/build/
+
+out/
+*.iml
+.idea/
+
+*.log
+hs_err_pid*
+replay_pid*
+
+boosted-yaml/
