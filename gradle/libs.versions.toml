@@ -1,0 +1,22 @@
+[versions]
+paper = "26.1.2.build.63-stable"
+junit = "6.0.3"
+shadow = "9.4.1"
+boostedYaml = "1.3.7"
+hikari = "7.0.2"
+flyway = "12.6.1"
+mysqlConnector = "9.5.0"
+mockito = "5.18.0"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+boosted-yaml = { module = "dev.dejvokep:boosted-yaml", version.ref = "boostedYaml" }
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flyway-mysql = { module = "org.flywaydb:flyway-mysql", version.ref = "flyway" }
+mysql-connector = { module = "com.mysql:mysql-connector-j", version.ref = "mysqlConnector" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

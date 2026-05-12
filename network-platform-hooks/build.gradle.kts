@@ -1,6 +1,11 @@
-val paperApiVersion = providers.gradleProperty("paperApiVersion").get()
+val placeholderApiVersion = "2.12.2"
+
+repositories {
+    maven("https://repo.extendedclip.com/releases/")
+}
 
 dependencies {
     api(project(":network-platform-paper"))
-    compileOnly("io.papermc.paper:paper-api:$paperApiVersion")
+    compileOnly(libs.paper.api)
+    compileOnly("me.clip:placeholderapi:$placeholderApiVersion")
 }

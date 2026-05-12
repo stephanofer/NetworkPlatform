@@ -22,15 +22,14 @@ public final class NetworkPlatform {
     private final PlatformContext context;
     private final PlatformLifecycle lifecycle;
     private final InstalledModuleRegistry modules;
-    private final CommandService commands;
     private final ConfigService configs;
     private final AtomicBoolean shutdown;
+    private volatile CommandService commands;
 
     private NetworkPlatform(final JavaPlugin plugin) {
         this.context = new PlatformContext(plugin);
         this.lifecycle = new PlatformLifecycle(this.context.logger());
         this.modules = new InstalledModuleRegistry();
-        this.commands = new PaperCommandService(plugin, this.context.logger());
         this.configs = new DefaultConfigService(
             this.context.dataDirectory(),
             plugin::getResource,
@@ -38,8 +37,6 @@ public final class NetworkPlatform {
             this.lifecycle
         );
         this.shutdown = new AtomicBoolean(false);
-
-        this.lifecycle.onShutdown(this.commands::clear);
     }
 
     public static NetworkPlatform create(final JavaPlugin plugin) {
@@ -64,7 +61,21 @@ public final class NetworkPlatform {
     }
 
     public CommandService commands() {
-        return this.commands;
+        CommandService commandService = this.commands;
+        if (commandService != null) {
+            return commandService;
+        }
+
+        synchronized (this) {
+            commandService = this.commands;
+            if (commandService == null) {
+                ensureActive();
+                commandService = new PaperCommandService(this.plugin(), this.context.logger());
+                this.lifecycle.onShutdown(commandService::clear);
+                this.commands = commandService;
+            }
+            return commandService;
+        }
     }
 
     public ConfigService configs() {

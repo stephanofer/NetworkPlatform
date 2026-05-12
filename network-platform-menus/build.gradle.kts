@@ -1,4 +1,3 @@
-val paperApiVersion = providers.gradleProperty("paperApiVersion").get()
 val zMenuApiVersion = "1.1.1.3"
 val foliaLibVersion = "0.5.1"
 
@@ -9,13 +8,13 @@ repositories {
 
 dependencies {
     api(project(":network-platform-paper"))
-    compileOnly("io.papermc.paper:paper-api:$paperApiVersion")
+    compileOnly(libs.paper.api)
     compileOnly("fr.maxlego08.menu:zmenu-api:$zMenuApiVersion")
 
-    testImplementation("io.papermc.paper:paper-api:$paperApiVersion")
+    testImplementation(libs.paper.api)
     testImplementation("fr.maxlego08.menu:zmenu-api:$zMenuApiVersion")
     testImplementation("com.tcoded:FoliaLib:$foliaLibVersion")
-    testImplementation("org.mockito:mockito-core:5.18.0")
+    testImplementation(libs.mockito.core)
 }
 
 tasks.withType<Test>().configureEach {

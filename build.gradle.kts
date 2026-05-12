@@ -16,7 +16,6 @@ allprojects {
 subprojects {
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
-
     val junitVersion = providers.gradleProperty("junitVersion").get()
 
     java {
@@ -46,7 +45,7 @@ subprojects {
             create<MavenPublication>("mavenJava") {
                 from(
                     components[
-                        if (project.name == "network-platform-paper" && components.names.contains("shadow")) {
+                        if (components.names.contains("shadow")) {
                             "shadow"
                         } else {
                             "java"

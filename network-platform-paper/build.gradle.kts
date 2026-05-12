@@ -1,19 +1,17 @@
 plugins {
-    id("com.gradleup.shadow") version "9.4.1"
+    alias(libs.plugins.shadow)
 }
 
-val paperApiVersion = providers.gradleProperty("paperApiVersion").get()
-val boostedYamlVersion = "1.3.7"
 val shade by configurations.creating
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:$paperApiVersion")
-    testImplementation("io.papermc.paper:paper-api:$paperApiVersion")
+    compileOnly(libs.paper.api)
+    testImplementation(libs.paper.api)
 
-    compileOnly("dev.dejvokep:boosted-yaml:$boostedYamlVersion")
-    testImplementation("dev.dejvokep:boosted-yaml:$boostedYamlVersion")
+    compileOnly(libs.boosted.yaml)
+    testImplementation(libs.boosted.yaml)
 
-    shade("dev.dejvokep:boosted-yaml:$boostedYamlVersion")
+    shade(libs.boosted.yaml)
 }
 
 tasks.shadowJar {
